@@ -394,9 +394,52 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <p>Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/pixels.cpp">exemplos/pixels.cpp</a> como referência, foi implementado o programa regions.cpp. Esse programa solicita ao usuário as coordenadas de dois pontos P1P1 e P2P2 localizados dentro dos limites do tamanho da imagem e exibir o que lhe for fornecida. Entretanto, a região definida pelo retângulo de vértices opostos definidos pelos pontos P1P1 e P2P2 será exibida com o negativo da imagem na região correspondente.</p>
 </li>
 <li>
-<p>Como pode ser observado no codigo abaixo, primeiramente a imagem <em>e</em> carregado com escala de cinza, posteriormente <em>e</em> solicitado ao usu&#8217;ario os pontos os quais v<sub>ao ser usados para negativar a regi</sub>ao, ap&#8217;os o usu&#8217;ario digitar os valores dos pontos <em>e</em> iniciado um laço que vai percorrer toda a regi~ao que compreende os pontos passados, a cada pixel acessado seu valor <em>e</em> invertido do seu valor original. A direita do c&#8217;odigo podemos ver a sa&#8217;ida do programa.
-----    [Source, regions.cpp]
-    <span class="image" style="float: center"><img src="regions-codigo.png" alt="Regions.cpp" width="300" height="200"></span> <span class="image" style="float: center"><img src="bielnegativo.png" alt="bielnegativo" width="590" height="630" title="bielnegativo.png"></span></p>
+<p>Como pode ser observado no codigo abaixo, primeiramente a imagem á carregada com escala de cinza, posteriormente é solicitado ao usuário os pontos os quais vão ser usados para negativar a região, após o usuário digitar os valores dos pontos é iniciado um laço que vai percorrer toda a região que compreende os pontos passados, a cada pixel acessado seu valor é invertido do seu valor original. A direita do código podemos ver a saída do programa.
+		----	[Source, cpp]
+		#include &lt;iostream&gt;
+#include &lt;cv.h&gt;
+#include &lt;highgui.h&gt;
+#include &lt;math.h&gt;
+using namespace cv;
+using namespace std;
+int main(int, char**){
+  Mat image;
+    int xP1,xP2,yP1,yP2;
+  //Primeiro Ponto
+  cout&lt;&lt; "Digite os pontos P1 e P2"<a href="#endl;
+  cout&lt;&lt; "X de P1: "&lt;&lt;endl;
+  cin">[endl;
+  cout&lt;&lt; "X de P1: "&lt;&lt;endl;
+  cin]</a> xP1;
+  cout&lt;&lt; "Y de P1: "<a href="#endl;
+  cin">[endl;
+  cin]</a> yP1;
+  cout&lt;&lt; "P1 = ("<a href="#xP1&lt;&lt;"">"&lt;&lt;yP1&lt;&lt;")"&lt;&lt;endl;
+  //Segundo Ponto
+  cout&lt;&lt; "X de P2: "&lt;&lt;endl;
+  cin</a> xP2;
+  cout&lt;&lt; "Y de P2: "<a href="#endl;
+  cin">[endl;
+  cin]</a> yP2;
+  cout&lt;&lt; "P2 = ("&lt;&lt;xP2&lt;&lt;","&lt;&lt;yP2&lt;&lt;")"&lt;&lt;endl;
+  //Load da Imagem
+  image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
+  //Negativo
+  for(int i=xP1;i&lt;xP2;i<code>){
+    for(int j=yP1;j&lt;yP2;j</code>){
+      image.at&lt;uchar&gt;(i,j)= 255 - image.at&lt;uchar&gt;(i,j);
+    }
+  }
+  //Mostrar a imagem
+  imshow("janela", image);
+  waitKey();
+  return 0;
+}</p>
+<div class="literalblock">
+<div class="content">
+<pre>image:regions-codigo.png[Regions.cpp,300,200,float="center",align="left"] image:bielnegativo.png[title="bielnegativo.png",590,630,float="center",align="right"]</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -459,7 +502,7 @@ Por fim, realiza-se a rotulagem por aqueles elementos que possuem bolhas. Para f
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-03 19:34:29 BRT
+Last updated 2017-04-03 19:43:04 BRT
 </div>
 </div>
 </body>
