@@ -657,7 +657,7 @@ imshow("Imagem Normal", image);</pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Exercício 2: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/histogram.cpp">histogram.cpp</a> como referência, foi implementado o programa motiondetector.cpp. O programa calcula continuamente o histograma da imagem e o compara com o último histograma calculado. Quando a diferença entre estes ultrapassar um limiar pré-estabelecido, o movimento feito é pintado de vermelho, destacando assim a movimentação. As principais alterações feitas no código, foi a adição de uma função de detecção de movimento, que vai detectar a variação da mudanção de framas da imgam em tempo real, destacando-os assim de vermelho. Segue a implementação dessa função, e como ela deve ser chamada no laço de repetição principal do código:</p>
+<p>Exercício 2: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/histogram.cpp">histogram.cpp</a> como referência, foi implementado o programa motiondetector.cpp. O programa calcula continuamente o histograma da imagem e o compara com o último histograma calculado. Quando a diferença entre estes ultrapassar um limiar pré-estabelecido, o movimento feito é pintado de vermelho, destacando assim a movimentação. As principais alterações feitas no código, foram a adição de uma função de detecção de movimento, que vai detectar a variação da mudança de framas da imgam em tempo real, destacando-os de vermelho. Segue a implementação dessa função, e como ela deve ser chamada no laço de repetição principal do código:</p>
 <div class="literalblock">
 <div class="content">
 <pre>void Compare(Mat ima, Mat oldIma)
@@ -701,7 +701,7 @@ image2.copyTo(old_image);</pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Exercício 1: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> como referência, foi implementado o programa laplgauss.cpp. O programa acrescenta uma funcionalidade ao exemplo fornecido, permitindo que seja calculado o laplaciano do gaussiano das imagens capturadas. Foi adicionado um novo filtro, a partir de uma matriz de convolução 5x5, que pode ser encontrada facilmente na internet, onde com ela, se é posivel achar o laplaciano do gaussiano de uma imagem, e em seguida, adicionada a opção no menu de escolha. Segue matriz utilizada:</p>
+<p>Exercício 1: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> como referência, foi implementado o programa laplgauss.cpp. O programa acrescenta uma funcionalidade ao exemplo fornecido, permitindo que seja calculado o laplaciano do gaussiano das imagens capturadas. Foi adicionado um novo filtro, a partir de uma matriz de convolução 5x5, que pode ser encontrada facilmente na internet, onde com ela, se é posivel achar o laplaciano do gaussiano de uma imagem, e em seguida, foi adicionada a opção no menu de escolha. Segue matriz utilizada:</p>
 <div class="literalblock">
 <div class="content">
 <pre>float laplg[] = {0,0,-1,0,0,
@@ -726,7 +726,7 @@ image2.copyTo(old_image);</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-04 00:58:13 BRT
+Last updated 2017-04-04 01:04:16 BRT
 </div>
 </div>
 </body>
