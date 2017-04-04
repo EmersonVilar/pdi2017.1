@@ -363,7 +363,9 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <body class="article">
 <div id="header">
 <h1>Processamento Digital de Imagens</h1>
-<span id="author" class="author">Arthur Freitas Silveira &lt;arthurafs@hotmail.com&gt; Emerson Vilar de Oliveira &lt;emerson_vilar@hotmail.com&gt;</span><br>
+<span id="author" class="author">Arthur Freitas Silveira</span><br>
+<span id="email" class="email"><a href="mailto:arthurafs@hotmail.com">arthurafs@hotmail.com</a></span><br>
+<span id="revdate">Emerson Vilar de Oliveira &lt;emerson_vilar@hotmail.com&gt;</span>
 </div>
 <div id="content">
 <div id="preamble">
@@ -395,45 +397,51 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 using namespace cv;
 using namespace std;
 int main(int, char**){
- Mat image;
-   int xP1,xP2,yP1,yP2;
-  //Primeiro Ponto
-  cout&lt;&lt; "Digite os pontos P1 e P2"&lt;&lt;endl;
-  cout&lt;&lt; "X de P1: "&lt;&lt;endl;
-  cin&gt;&gt; xP1;
-  cout&lt;&lt; "Y de P1: "&lt;&lt;endl;
-  cin&gt;&gt; yP1;
-  cout&lt;&lt; "P1 = ("&lt;&lt;xP1&lt;&lt;","&lt;&lt;yP1&lt;&lt;")"&lt;&lt;endl;
-  //Segundo Ponto
+Mat image;
+int xP1,xP2,yP1,yP2;
+//Primeiro Ponto
+cout&lt;&lt; "Digite os pontos P1 e P2"&lt;&lt;endl;
+cout&lt;&lt; "X de P1: "&lt;&lt;endl;
+cin&gt;&gt; xP1;
+cout&lt;&lt; "Y de P1: "&lt;&lt;endl;
+cin&gt;&gt; yP1;
+out&lt;&lt; "P1 = ("&lt;&lt;xP1&lt;&lt;","&lt;&lt;yP1&lt;&lt;")"&lt;&lt;endl;
+//Segundo Ponto
 cout&lt;&lt; "X de P2: "&lt;&lt;endl;
- cin&gt;&gt; xP2;
-  cout&lt;&lt; "Y de P2: "&lt;&lt;endl;
-  cin&gt;&gt; yP2;
-  cout&lt;&lt; "P2 = ("&lt;&lt;xP2&lt;&lt;","&lt;&lt;yP2&lt;&lt;")"&lt;&lt;endl;
-  //Load da Imagem
-  image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
-  //Negativo
-  for(int i=xP1;i&lt;xP2;i++){
-        for(int j=yP1;j&lt;yP2;j++){
-         image.at&lt;uchar&gt;(i,j)= 255 - image.at&lt;uchar&gt;(i,j);
+cin&gt;&gt; xP2;
+cout&lt;&lt; "Y de P2: "&lt;&lt;endl;
+cin&gt;&gt; yP2;
+cout&lt;&lt; "P2 = ("&lt;&lt;xP2&lt;&lt;","&lt;&lt;yP2&lt;&lt;")"&lt;&lt;endl;
+//Load da Imagem
+image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
+//Negativo
+for(int i=xP1;i&lt;xP2;i++){
+    for(int j=yP1;j&lt;yP2;j++){
+        image.at&lt;uchar&gt;(i,j)= 255 - image.at&lt;uchar&gt;(i,j);
+            }
         }
-  }
-  //Mostrar a imagem
-  imshow("janela", image);
-  waitKey();
-  return 0;
+//Mostrar a imagem
+imshow("janela", image);
+waitKey();
+return 0;
 }</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>image:bielnegativo.png[title="bielnegativo.png",590,630,float="center",align="right"]</pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
 </li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem Biel com os pontos P1(50,50) e P2(150,150)
+			<span class="image" style="float: center"><img src="bielnegativo.png" alt="BielNegativo.png" width="256" height="256"></span></p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Exercício 2:</p>
 <div class="ulist">
@@ -442,26 +450,66 @@ cout&lt;&lt; "X de P2: "&lt;&lt;endl;
 <p>Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/pixels.cpp">exemplos/pixels.cpp</a> como referência, foi implementado o programa trocaregioes.cpp. O programa troca os quadrantes em diagonal na imagem fazendo o uso da classe Mat e seus construtores para criar as regiões que serão trocadas.</p>
 </li>
 <li>
-<p>Nesse caso foi utilizado uma imagem 256x256 pixels, com isso foram declaradas duas matrizes Mat com n=256 que armazenam as imagens, depois foram declaradas mais 4 matrizes para armazenar cada quadrante separadamente. Por fim cada quadrante <em>e</em> copiado na outra matriz com os quadrantes invertidos. Ao lado podemos ver como era e como ficou a imagem ap&#8217;os a execuç~ao do programa.
-----
-    <span class="image" style="float: center"><img src="trocaregioes-codigo.png" alt="Regions.cpp" width="400" height="200"></span> <span class="image" style="float: center"><img src="teste1.png" alt="teste1" width="300" height="200" title="original.png"></span> <span class="image" style="float: center"><img src="trocaregioes.png" alt="trocaregioes" width="300" height="200" title="trocaregioes.png"></span></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Seção 3: Preenchendo regiões</p>
-</li>
-</ol>
+<p>Nesse caso foi utilizado uma imagem 256x256 pixels, com isso foram declaradas duas matrizes Mat com n=256 que armazenam as imagens, depois foram declaradas mais 4 matrizes para armazenar cada quadrante separadamente. Por fim cada quadrante é copiado na outra matriz com os quadrantes invertidos. Ao lado podemos ver como era e como ficou a imagem após a execução do programa.</p>
+<div class="literalblock">
+<div class="content">
+<pre>#include &lt;iostream&gt;
+#include &lt;cv.h&gt;
+#include &lt;highgui.h&gt;
+#include &lt;opencv2/imgproc/imgproc.hpp&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;stdlib.h&gt;
+using namespace cv;
+using namespace std;
+int main(int, char**){
+Mat image(256,256,CV_8UC1);
+  Mat image2(256,256,CV_8UC1);
+  Vec3b val;
+//Carregando a imagem
+  image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
+  if(!image.data)
+  cout &lt;&lt; "A imagem nao abriu" &lt;&lt; endl;
+ namedWindow("janela",WINDOW_AUTOSIZE);
+//                    (y,x, w, h)
+  Mat quadrado1(image, Rect(0,0,128,128));
+   Mat quadrado2(image, Rect(128,0,128,128));
+  Mat quadrado3(image, Rect(0,128,128,128));
+  Mat quadrado4(image, Rect(128,128,128,128));
+//Copiando os retangulos para a imagem
+  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
+  quadrado2.copyTo(image2(Rect(0, 128, 128, 128)));
+  quadrado3.copyTo(image2(Rect(128, 0, 128, 128)));
+  quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));
+//Mostrar a Imagem
+  imshow("janela", image2);
+  imwrite("trocaregioes.png", image2);
+waitKey();
+return 0;
+}</pre>
+</div>
 </div>
 </li>
 </ul>
 </div>
 </li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem Biel com os quadrantes invertidos
+			<span class="image" style="float: center"><img src="trocaregioes.png" alt="trocaregioes" width="300" height="200" title="trocaregioes.png"></span></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Seção 4: Preenchendo regiões</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Exercício 1:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Observando-se o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/labeling.cpp">labeling.cpp</a> como exemplo, é possível verificar que caso existam mais de 255 objetos na cena, o processo de rotulação poderá ficar comprometido. Com isso uma soluç~ao poss&#8217;ivel <em>e</em> resetar o contador sempre que chegar em 255 e criar uma vari&#8217;avel auxiliar que vai ser incrementada sempre que isso ocorrer.</p>
+<p>Observando-se o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/labeling.cpp">labeling.cpp</a> como exemplo, é possível verificar que caso existam mais de 255 objetos na cena, o processo de rotulação poderá ficar comprometido. Com isso uma solução possível é resetar o contador sempre que chegar em 255 e criar uma variável auxiliar que vai ser incrementada sempre que isso ocorrer.</p>
 </li>
 </ul>
 </div>
@@ -471,13 +519,95 @@ cout&lt;&lt; "X de P2: "&lt;&lt;endl;
 <div class="ulist">
 <ul>
 <li>
-<p>Nesse segundo exercício o objetivo 'e aprimorar o algoritmo de contagem apresentado para identificar regiões com ou sem buracos internos que existam na cena. Assumindo que objetos com mais de um buraco podem existir. O programa tem suporte para não contar bolhas que tocam as bordas da imagem.</p>
+<p>Nesse segundo exercício o objetivo é aprimorar o algoritmo de contagem apresentado para identificar regiões com ou sem buracos internos que existam na cena. Assumindo que objetos com mais de um buraco podem existir. O programa tem suporte para não contar bolhas que tocam as bordas da imagem.</p>
 </li>
 <li>
 <p>O primeiro passo a se fazer é remover todas os elementos que tocam a borda. Para isso, aplica-se o tom de cinza preto (0) a todos os pixels da borda. Para diferenciar o fundo da imagem de um buraco, aplica-se novamente o floodfill; dessa vez rotulando com tom de cinza 100 que no código abaixo. Depois disso, realiza-se uma contagem total de bolhas, procurando por um tom de cinza 255 e rotulando todos os elementos encontrados inicialmente com o tom de cinza (60).
-Por fim, realiza-se a rotulagem por aqueles elementos que possuem bolhas. Para fazer isso, percorre-se a matriz da imagem, e sempre que for encontrado um pixel com rótulo (60) ou (80), armazena-se as coordenadas x e y desse elemento na variável p. O laço é continuado até encontrar um pixel de tom de cinza 0 (caso em que foi encontrada uma bolha), e nessa situação aplica-se o floodfill no último elemento p encontrado, rotulando este último agora com (80), aproveita-se também e rotula-se o buraco encontrado com (80).
-----
-    <span class="image" style="float: center"><img src="labeling2.png" alt="Labeling" width="800" height="400"></span></p>
+Por fim, realiza-se a rotulagem por aqueles elementos que possuem bolhas. Para fazer isso, percorre-se a matriz da imagem, e sempre que for encontrado um pixel com rótulo (60) ou (80), armazena-se as coordenadas x e y desse elemento na variável p. O laço é continuado até encontrar um pixel de tom de cinza 0 (caso em que foi encontrada uma bolha), e nessa situação aplica-se o floodfill no último elemento p encontrado, rotulando este último agora com (80), aproveita-se também e rotula-se o buraco encontrado com (80). Segue Código que conta a quantidade de bolhas na imagem.</p>
+<div class="literalblock">
+<div class="content">
+<pre>#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+using namespace cv;
+using namespace std;
+int main(int argc, char** argv){
+  Mat image, mask;
+  int width, height;
+  int nobjects;
+  int BRANCO = 255;
+  int PRETO = 0;
+  int BACKGROUND = 1;
+  int COM_BOLHA = 128;
+  int SEM_BOLHA = 127;
+  CvPoint p;
+  p.x = 0;
+  p.y = 0;
+  image = imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);
+  if(!image.data){
+    std::cout &lt;&lt; "imagem nao carregou corretamente\n";
+    return(-1);
+  }
+  //imshow("imageOriginal", image);
+  width=image.size().width;
+  height=image.size().height;
+  //Aplica 255 em todos os pontos na borda da
+  // imagem e aplica-se o floodfill para remover os elementos que tocam as bordas
+ for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(i==0 | i==255 | j==0 | j==255){
+    if(image.at&lt;uchar&gt;(i,j) != 0){
+      p.x=j;
+      p.y=i;
+      floodFill(image,p,0);
+    }
+      }
+    }
+  }
+  //Aplica-se o floodfill no ponto (0, 0) removendo todos os elementos da borda
+  floodFill(image, p, PRETO);
+  //Aplica-se o floodfill em todo o background da imagem
+  floodFill(image, p, BACKGROUND);
+  //Procurando por Elementos, julgando inicialmente que nenhum tem bolhas
+  int qtdTotal = 0;
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == 255){
+    p.x=j;
+    p.y=i;
+    qtdTotal++;
+    floodFill(image,p,SEM_BOLHA);
+      }
+    }
+  }
+  //Procurando por Elementos que possuem bolhas
+  int qtdComBolhas = 0;
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == COM_BOLHA || image.at&lt;uchar&gt;(i,j) == SEM_BOLHA){
+    p.x=j;
+    p.y=i;
+      }else if(image.at&lt;uchar&gt;(i,j) == PRETO){
+    if(image.at&lt;uchar&gt;(p.y,p.x) == SEM_BOLHA){
+      floodFill(image,p,COM_BOLHA);
+      qtdComBolhas++;
+    }
+    p.x=j;
+    p.y=i;
+    floodFill(image,p,COM_BOLHA);
+    //return 0;
+      }
+    }
+  }
+  cout &lt;&lt; "O numero total de bolhas é: "&lt;&lt; qtdTotal &lt;&lt; endl;
+  cout &lt;&lt; "O numero com buracos é: " &lt;&lt; qtdComBolhas &lt;&lt; endl;
+  cout &lt;&lt; "O numero sem buracos é: " &lt;&lt; qtdTotal - qtdComBolhas &lt;&lt;endl;
+  imshow("image", image);
+  imwrite("labeling1.png", image);
+  waitKey();
+  return 0;
+}</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -487,12 +617,20 @@ Por fim, realiza-se a rotulagem por aqueles elementos que possuem bolhas. Para f
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Imagem final do código após a contagem das bolhas.
+			<span class="image" style="float: center"><img src="bolhascont.png" alt="Bolhascont" width="256" height="256"></span></p>
+</div>
+<div class="paragraph">
+<p>Printscreen do terminal ao executar o código.
+			<span class="image" style="float: center"><img src="contagem.png" alt="Contagem" width="705" height="71"></span></p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-03 20:17:31 BRT
+Last updated 2017-04-03 21:52:43 BRT
 </div>
 </div>
 </body>
