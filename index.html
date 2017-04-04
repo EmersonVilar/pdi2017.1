@@ -625,12 +625,108 @@ int main(int argc, char** argv){
 <p>Printscreen do terminal ao executar o código.
 			<span class="image" style="float: center"><img src="contagem.png" alt="Contagem" width="705" height="71"></span></p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Seção 5: Manipulação de Histogramas</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Exercício 1: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/histogram.cpp">histogram.cpp</a> como referência, foi implementado o programa equalize.cpp. Para cada imagem capturada, o programa realiza a equalização do histograma antes de exibir a imagem. O programa foi testado apontando a câmera para ambientes com iluminações variadas e observando o efeito gerado. Do código orginal do calculo do histograma, foram acrescentadas apenas mais algumas linhas de código, que servem para em sequência, separar a imagem em três planos que são o R, G e B, em seguida equalizar cada um desses planos e por final, reagrupa-los armazenando em uma nova variavel. Segue alterações no código:</p>
+<div class="literalblock">
+<div class="content">
+<pre>split(image, planes);
+equalizeHist(planes[0], planes[0]);
+equalizeHist(planes[1], planes[1]);
+equalizeHist(planes[2], planes[2]);
+merge(planes, hist_equalized);
+imshow("Equalizada", hist_equalized);
+imshow("Imagem Normal", image);</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem do resultado da Equalização do Histograma
+			<span class="image" style="float: center"><img src="equalizada.png" alt="Equalizada" width="1280" height="520"></span></p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Exercício 2: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/histogram.cpp">histogram.cpp</a> como referência, foi implementado o programa motiondetector.cpp. O programa calcula continuamente o histograma da imagem e o compara com o último histograma calculado. Quando a diferença entre estes ultrapassar um limiar pré-estabelecido, o movimento feito é pintado de vermelho, destacando assim a movimentação. As principais alterações feitas no código, foi a adição de uma função de detecção de movimento, que vai detectar a variação da mudanção de framas da imgam em tempo real, destacando-os assim de vermelho. Segue a implementação dessa função, e como ela deve ser chamada no laço de repetição principal do código:</p>
+<div class="literalblock">
+<div class="content">
+<pre>void Compare(Mat ima, Mat oldIma)
+{
+  if (oldIma.rows == 0)
+      return;
+  for (int i = 0; i &lt; ima.rows; i++)
+  {
+    for (int j = 0; j &lt; ima.cols; j++)
+    {
+    float s = ima.at&lt;cv::Vec3b&gt;(i, j)[2] - oldIma.at&lt;cv::Vec3b&gt;(i, j)[2];
+    if ( s &gt; limiar)
+      {
+    ima.at&lt;cv::Vec3b&gt;(i, j)[2] = 255;
+    ima.at&lt;cv::Vec3b&gt;(i, j)[1] = 0;
+    ima.at&lt;cv::Vec3b&gt;(i, j)[0] = 0;
+      }
+    }
+  }
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>image.copyTo(image2);
+Compare(image, old_image);
+image2.copyTo(old_image);</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem que exemplifica a detecção do movimento
+			<span class="image" style="float: center"><img src="motiondetection.png" alt="Motiondetection" width="639" height="500"></span></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Seção 6: Filtragem no domínio espacial I</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Exercício 1: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> como referência, foi implementado o programa laplgauss.cpp. O programa acrescenta uma funcionalidade ao exemplo fornecido, permitindo que seja calculado o laplaciano do gaussiano das imagens capturadas. Foi adicionado um novo filtro, a partir de uma matriz de convolução 5x5, que pode ser encontrada facilmente na internet, onde com ela, se é posivel achar o laplaciano do gaussiano de uma imagem, e em seguida, adicionada a opção no menu de escolha. Segue matriz utilizada:</p>
+<div class="literalblock">
+<div class="content">
+<pre>float laplg[] = {0,0,-1,0,0,
+             0,-1,-2,-1,0,
+             -1,-2,16,-2,-1,
+             0,-1,-2,-1,0,
+             0,0,-1,0,0};</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem aplicada com o novo filtro
+			<span class="image" style="float: center"><img src="laplgauss.png" alt="Lapgauss" width="1281" height="505"></span></p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-03 21:52:43 BRT
+Last updated 2017-04-04 00:58:13 BRT
 </div>
 </div>
 </body>
