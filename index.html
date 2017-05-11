@@ -721,12 +721,187 @@ image2.copyTo(old_image);</pre>
 <p>Imagem aplicada com o novo filtro
 			<span class="image" style="float: center"><img src="laplgauss.png" alt="Lapgauss" width="1281" height="505"></span></p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Seção 8: Filtragem no dominio da frequência</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Exercício 1: Utilizando o programa <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/dft.cpp">dft.cpp</a> como referência, foi implementado o programa homomórfico.cpp. O programa usa da Transformada de Fourrier e de uma versão modificada do filtro Gaussiano, para com um ajuste de parâmetros, atenuar as frequências baixas e manter as altas das imagens em grayscale. O filtro homomórfico de Gauss é implementado na seguinte parte do código:</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Equação do Filtro
+			<span class="image" style="float: center"><img src="gaussiano.png" alt="Gaussiano" width="589" height="89"></span></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Mat filtroHomomorfico(double gl, double gh, double c, double d0){
+       // a função de transferência deve ter o
+      // mesmo tamanho e tipo da matriz complexa
+      Mat filter = Mat(padded.size(), CV_32FC2, Scalar(0));
+      // cria uma matriz temporária para criar as componentes real
+      // e imaginaria do filtro ideal
+      Mat tmp = Mat(dft_M, dft_N, CV_32F);
+      // prepara o filtro homomorfico a ser ajustado
+          for(int i=0; i&lt;dft_M; i++){
+                for(int j=0; j&lt;dft_N; j++){
+                        tmp.at&lt;float&gt; (i,j) = (gh - gl)*(1 - exp(-c*(( (i-dft_M/2)*(i-dft_M/2)+(j-dft_N/2)*(j-dft_N/2)) / (d0*d0) ))) + gl;
+                }
+          }</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>A seguir, é apresentada a parte do código onde se é implementada a aplicação do filtro Gaussiano, onde se segue uma sequência necessária de passos para que o resultado seja o esperado. De inicio é preciso criar planos para servirem de parte real e parte imaginária da imagem, como será aplicado o logarítimo na parte real da imagem, adicioana-se 1 (um) a todos os pixels da imagem, para que não se caia na inconsistência do log(0), em seguida os planos da imagem são unidos, e logo apoś, a DFT é aplicada. Usando da tecnica de trocas de quadrantes aprendida anteriormente, é possível tornar a aplicação do filtro mais simples, depois de trocados os quadrantes e normalizada a parte complexa da imagem, o filtro homomórfico é aplicado. Após a aplicação do filtro devidamente ajustado, é preciso fazer o processo oposto para a exibição correta da imagem, assim os quadrantes voltam as suas posições originais, e a IDFT (Transformada Inversa de Fourrier) é aplicada. Os planos são separados e a função exponencial é aplicada (inversa ao log), se diminui o 1 (um) anteriormente somado e por fim a imagem é normalizada e exibida. Segue a implementação desta descrição:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>void aplicarFiltro(void){
+   vector&lt;Mat&gt; planos;
+   Mat_&lt;float&gt; realInput, zeros;
+   Mat  complexImage;
+   // parte imaginaria da matriz complexa (preenchida com zeros)
+   zeros = Mat_&lt;float&gt;::zeros(padded.size());
+   // prepara a matriz complexa para ser preenchida
+   complexImage = Mat(padded.size(), CV_32FC2, Scalar(0));
+     // limpa o array de matrizes que vao compor a
+     // imagem complexa
+     planos.clear();
+     // cria a compoente real
+     realInput = Mat_&lt;float&gt;(padded);
+     //Soma 1 a todos os valores, para que não
+     //ocorra a insistencis de log(0)
+     realInput += Scalar::all(1);
+     //Aplica o log na parte real
+     log(realInput,realInput);
+     // insere as duas componentes no array de matrizes
+     planos.push_back(realInput);
+     planos.push_back(zeros);
+     // combina o array de matrizes em uma unica
+     // componente complexa
+     merge(planos, complexImage);
+     // calcula o dft
+     dft(complexImage, complexImage);
+     // realiza a troca de quadrantes
+     deslocaDFT(complexImage);
+     //Recoloca a imgaem para o tamanho original
+     // E normaliza a DFT da mesma
+     resize(complexImage,complexImage,padded.size());
+     normalize(complexImage,complexImage,0,1,CV_MINMAX);
+     // aplica o filtro homomorfico
+     Mat filter = filtroHomomorfico(gl1,gh1,c1,d01);
+     //
+     mulSpectrums(complexImage,filter,complexImage,0);
+     // troca novamente os quadrantes
+     deslocaDFT(complexImage);
+     // calcula a DFT inversa
+     idft(complexImage, complexImage);
+     // limpa o array de planos
+     planos.clear();
+     // separa os planos da idft
+     split(complexImage, planos);
+     // calcula a exponencial dos planos
+     exp(planos[0],planos[0]);
+     // Diminui o 1 anteriormente somado
+     planos[0] -= Scalar::all(1);
+     //Normaliza para a exibição
+     normalize(planos[0], planos[0], 0, 1, CV_MINMAX);
+     imagemFiltrada = planos[0].clone();
+ }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Imagem Original
+			<span class="image" style="float: center"><img src="originalluz.png" alt="Original" width="1366" height="768"></span></p>
+</div>
+<div class="paragraph">
+<p>Imagem Filtrada pelo Filtro Homomórfico
+			<span class="image" style="float: center"><img src="luzhomomorfica.png" alt="Homomorfica" width="1366" height="768"></span></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Seção 9,10 e 11: Filtragem de Canny e Algoritimo de pontilhismo</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Exercício 1: Utilizando os programas <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/canny.cpp">canny.cpp</a> e <a href="http://agostinhobritojr.github.io/tutoriais/pdi/exemplos/pontilhismo.cpp">pontilhismo.cpp</a> como referência, foi implementado o programa cannypoints.cpp. Onde são usados o algoritmo de detecção de bordas de Canny, e uma tecnica de pintura chamada de pontilhismo, que usa apenas de ponstos para preencher toda a tela de pintura. Inicialmente foram aumentados os parametros STEP, JITTER e RAIO para que na primeira iteração os circulos sejam maiores e mais espaçados na imagem.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Imagem Orinigal
+			<span class="image" style="float: center"><img src="autumn-umbrella.jpg" alt="Umbrella" width="720" height="720"></span></p>
+</div>
+<div class="paragraph">
+<p>Imagem Pontilhada
+			<span class="image" style="float: center"><img src="points.jpg" alt="Pontilhada" width="720" height="720"></span></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Em seguida é mestrada a modificalção no algoritmo, para que com a variação do limiar, a imagem passe pelo filtro de Canny, limiar esse que vaira de 10 a 150, em dez iterações a uma taxa de 15 por iteração. A medida que o limiar aumenta, o raio diminui, fazendo assim com que quanto mais alto o limiar, menos seja o raio do ponto desenhado. Segue a imagem do algoritmo de Canny para o primeiro e ultimo limiar (10 - 150):</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Imagem resultante do Algoritmo de Canny para o limiar 10
+			<span class="image" style="float: center"><img src="LIMIAR10.png" alt="LIMIAR10" width="720" height="720"></span></p>
+</div>
+<div class="paragraph">
+<p>Imagem resultante do Algoritmo de Canny para o limiar 150
+			<span class="image" style="float: center"><img src="LIMIAR150.png" alt="LIMIAR150" width="720" height="720"></span></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Após passar por todas iterações, a imagem final ganha um efeito, onde é possível notar alguns pontos maiores, e em outras regiões a existencia de circulos é imperceptível. Segue imagem filtrada pelo algoritmo cannypoints.cpp:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Resultado da Imagem filtrada pelo cannypoints.cpp
+			<span class="image" style="float: center"><img src="cannypoints.jpg" alt="CANNYPOINTS" width="720" height="720"></span></p>
+</div>
+<div class="paragraph">
+<p>Alteração no código que gera a imagem acima.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>int limiar = 10;
+  int raio = 15;
+  for(int e=0; e&lt;10; e++){
+    Canny(image, border, limiar, 3*limiar);
+    limiar=limiar*15;
+    for(int i=1; i&lt;width; i++){
+      for(int j=1; j&lt;height; j++){
+    if(border.at&lt;uchar&gt;(i,j) == 255){
+      val = image.at&lt;Vec3b&gt;(i,j);
+      circle(points,
+         cv::Point(j,i),
+         raio,
+         CV_RGB(val[2],val[1],val[0]),
+         -1,
+         CV_AA);
+    }
+      }
+    }
+    raio=raio-1;
+  }</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-04 01:10:30 BRT
+Last updated 2017-05-11 18:19:23 -03
 </div>
 </div>
 </body>
